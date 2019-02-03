@@ -6,9 +6,3 @@ RUN npm install -g nodemon
 RUN npm install -g pm2
 RUN npm install -g node-gyp
 RUN npm install -g node-pre-gyp
-
-FROM node:alpine as app
-
-WORKDIR /opt/app
-##COPY --from=builder node_modules .
-RUN apk del .gyp
