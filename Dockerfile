@@ -10,5 +10,5 @@ RUN npm install -g node-pre-gyp
 FROM node:alpine as app
 
 WORKDIR /opt/app
-COPY --from=builder node_modules .
+##COPY --from=builder node_modules .
 RUN apk del .gyp
