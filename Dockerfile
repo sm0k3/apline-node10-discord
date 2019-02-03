@@ -1,14 +1,14 @@
-FROM node:10-alpine
-
+FROM node:10-alpine as builder
 WORKDIR /opt/app
-
-# Extras:
-RUN apk add --no-cache --virtual build-dependencies curl git make gcc g++ python libtool autoconf automake binutils build-base libsodium libsodium-dev
-# Globally installed NPMs:
+## Install build toolchain, install node deps and compile native add-ons
+RUN apk add --no-cache --virtual .gyp binutils build-base python make g++ autoconf automake libtool libsodium-dev
 RUN npm install -g nodemon
 RUN npm install -g pm2
 RUN npm install -g node-gyp
 RUN npm install -g node-pre-gyp
-RUN npm install -g sodium@2.0.3
-RUN npm install -g pac
-RUN apk del build-dependencies
+
+FROM node:alpine as app
+
+WORKDIR /opt/app
+COPY --from=builder node_modules .
+RUN apk del .gyp
