@@ -1,4 +1,4 @@
-FROM node:10-alpine as builder
+FROM node:10-alpine
 WORKDIR /opt/app
 ## Install build toolchain, install node deps and compile native add-ons
 RUN apk add --no-cache --virtual .gyp binutils build-base python make g++ autoconf automake libtool libsodium-dev
